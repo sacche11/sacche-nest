@@ -4,12 +4,13 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
+  ManyToMany,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Person } from './person.entity';
 
 export enum BookIncludes {
-  Owner = 'owner',
+  Owners = 'owners',
 }
 
 @Entity('libro')
@@ -22,12 +23,7 @@ export class Book {
   @Column({ name: 'titulo', length: 255 })
   name: string;
 
-  @ApiProperty()
-  @Column({ name: 'id_persona' })
-  ownerId: number;
-
   @ApiProperty({ type: Person, required: false })
-  @ManyToOne(() => Person, (person) => person.books)
-  @JoinColumn({ name: 'id_persona' })
-  owner: Person;
+  @ManyToMany(() => Person, (person) => person.books)
+  owners: Person[];
 }

@@ -20,7 +20,7 @@ export class BookService {
         id,
       },
       relations: {
-        owner: includes?.includes(BookIncludes.Owner),
+        owners: includes?.includes(BookIncludes.Owners),
       },
     });
 

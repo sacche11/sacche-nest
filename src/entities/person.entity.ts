@@ -6,6 +6,8 @@ import {
   JoinColumn,
   ManyToOne,
   Check,
+  JoinTable,
+  ManyToMany,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Book } from './book.entity';
@@ -49,6 +51,7 @@ export class Person {
   father?: Person; //property
 
   @ApiProperty({ type: Book, isArray: true })
-  @OneToMany(() => Book, (book) => book.owner)
+  @ManyToMany(() => Book, (book) => book.owners)
+  @JoinTable()
   books: Book[];
 }
