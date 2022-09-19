@@ -6,4 +6,4 @@ import { PersonsModule } from './persons.module';
   imports: [PersonsModule, BookModule],
   providers: [],
 })
-export class AppModule { }
+export class AppModule {}

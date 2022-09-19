@@ -1,5 +1,5 @@
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
-import { Book } from 'src/entities/book.entity';
+import { Book, BookIncludes } from 'src/entities/book.entity';
 
 import { Repository } from 'typeorm';
 
@@ -8,15 +8,20 @@ export class BookService {
   constructor(
     @Inject('BOOK_REPOSITORY')
     private bookRepository: Repository<Book>,
-  ) { }
+  ) {}
 
   async findAll(): Promise<Book[]> {
     return this.bookRepository.find();
   }
 
-  async get(id: number): Promise<Book> {
-    const book: Book | null = await this.bookRepository.findOneBy({
-      id,
+  async get(id: number, includes?: BookIncludes[]): Promise<Book> {
+    const book: Book | null = await this.bookRepository.findOne({
+      where: {
+        id,
+      },
+      relations: {
+        owner: includes?.includes(BookIncludes.Owner),
+      },
     });
 
     if (!book) {

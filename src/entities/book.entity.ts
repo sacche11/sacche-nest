@@ -8,6 +8,10 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 import { Person } from './person.entity';
 
+export enum BookIncludes {
+  Owner = 'owner',
+}
+
 @Entity('libro')
 export class Book {
   @ApiProperty()
