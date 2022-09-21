@@ -30,7 +30,7 @@ export class Person {
   name: string;
 
   @ApiProperty()
-  @Column({ name: 'dni', length: 255 })
+  @Column({ name: 'dni', length: 255, unique: true })
   dni: string;
 
   @ApiProperty()
@@ -46,7 +46,10 @@ export class Person {
   children: Person[];
 
   @ApiProperty({ type: Person, required: false })
-  @ManyToOne(() => Person, (person) => person.children) // Decorator
+  @ManyToOne(() => Person, (person) => person.children, {
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
+  }) // Decorator
   @JoinColumn({ name: 'id_padre' })
   father?: Person; //property
 
